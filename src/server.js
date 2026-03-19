@@ -1,9 +1,9 @@
 import express from 'express';
+import cors from 'cors'; // 👈 IMPORTANTE
 import connectDB from './config/connection.js';
 import { gerarResposta } from "./service/Gemini/aiService.js";
 import PromptResult from './models/PromptResult.js';
 import 'dotenv/config';
-
 
 async function generateAndSave() {
   const resposta = await gerarResposta(
@@ -11,22 +11,22 @@ async function generateAndSave() {
   );
 
   try {
-    // 🔍 Validação: Verifica se a resposta contém o padrão de erro de quota
+    // 🔍 Validação: erro de quota
     if (typeof resposta === 'string' && resposta.includes('"error"') && resposta.includes('429')) {
       console.error("⚠️ Falha na API: Limite de requisições excedido. Não salvando no banco.");
-      return; // Interrompe a função aqui
+      return;
     }
 
-    // Validação extra: se por acaso a resposta vier vazia ou nula
+    // 🔍 validação extra
     if (!resposta) {
       console.error("⚠️ Resposta vazia recebida da IA.");
       return;
     }
 
-    // 💾 Salva apenas se passar nas validações acima
+    // 💾 salvar
     await PromptResult.create({
       prompt: "Post semanal IA",
-      resposta: resposta, 
+      resposta: resposta,
     });
 
     console.log(`✅ Post salvo com sucesso no banco!`);
@@ -49,6 +49,15 @@ function startWeeklyJob() {
 }
 
 const app = express();
+
+// ✅ CORS AQUI (ANTES DAS ROTAS)
+app.use(cors());
+
+// (opcional - mais seguro)
+// app.use(cors({
+//   origin: ['http://localhost:5173', 'https://seusite.com'],
+// }));
+
 app.use(express.json());
 
 connectDB();
