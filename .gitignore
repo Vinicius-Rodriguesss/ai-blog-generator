@@ -1,0 +1,38 @@
+# dependências
+node_modules/
+
+# arquivos de ambiente (NUNCA subir)
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# build / cache
+dist/
+build/
+.cache/
+
+# coverage (testes)
+coverage/
+
+# arquivos do VSCode (opcional)
+.vscode/
+
+# arquivos temporários
+*.tmp
+*.temp
+
+# lock opcional (se quiser ignorar)
+# package-lock.json
