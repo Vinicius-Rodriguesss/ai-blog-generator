@@ -1,14 +1,12 @@
 import express from 'express';
-import cors from 'cors'; // 👈 IMPORTANTE
+import cors from 'cors'; 
 import connectDB from './config/connection.js';
 import { gerarResposta } from "./service/Gemini/aiService.js";
 import PromptResult from './models/PromptResult.js';
 import 'dotenv/config';
 
 async function generateAndSave() {
-  const resposta = await gerarResposta(
-    "Crie um post moderno sobre tecnologia e inteligência artificial"
-  );
+  const resposta = await gerarResposta();
 
   try {
     // 🔍 Validação: erro de quota
@@ -53,10 +51,6 @@ const app = express();
 // ✅ CORS AQUI (ANTES DAS ROTAS)
 app.use(cors());
 
-// (opcional - mais seguro)
-// app.use(cors({
-//   origin: ['http://localhost:5173', 'https://seusite.com'],
-// }));
 
 app.use(express.json());
 

@@ -2,11 +2,11 @@ import mongoose from 'mongoose';
 
 const connectDB = async () => {
  try {
-  await mongoose.connect("mongodb+srv://admin:43128529@cluster-dev.qjzfsjf.mongodb.net/promptsDB?appName=Cluster-dev");
+  await mongoose.connect(process.env.MONGO_URI);
   console.log("✅ MongoDB conectado");
  } catch (error) {
   console.error("❌ Erro ao conectar:", error);
  }
 };
 
-export default connectDB;
+export default connectDB; 
