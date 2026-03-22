@@ -12,6 +12,9 @@
   "author": "",
   "license": "ISC",
   "type": "module",
+  "engines": {
+    "node": "14.x"
+  },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "cors": "^2.8.6",
